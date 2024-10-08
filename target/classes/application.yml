@@ -7,17 +7,7 @@ spring:
   h2:
     console:
       enabled: true
-
-Properties
-spring.profiles.active=loadInitialData
-
-# Konfiguracja bazy danych (przykład dla H2)
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.datasource.username=sa
-spring.datasource.password=
-spring.jpa.hibernate.ddl-auto=create-drop   
-
-
-# Konfiguracja profilu loadInitialData
-spring.datasource.initialization-mode=always
-spring.datasource.data=classpath:data.sql
+  profiles:
+    active: loadInitialData
+server:
+  port: 8080
