@@ -14,7 +14,7 @@
 
     <groupId>pl.wsb</groupId>
     <artifactId>CapWSB-FitnessTracker</artifactId>
-    <version>1.0.0-99672-001-SNAPSHOT</version>
+    <version>1.0.0-99672-100452-SNAPSHOT</version>
     <name>CapWSB-FitnessTracker</name>
     <description>Demo project for Spring Boot</description>
 
