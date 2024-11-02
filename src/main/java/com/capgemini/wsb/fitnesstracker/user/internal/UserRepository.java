@@ -2,10 +2,11 @@ package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.List;
 
 interface UserRepository extends JpaRepository<User, Long> {
 
@@ -20,5 +21,16 @@ interface UserRepository extends JpaRepository<User, Long> {
                         .filter(user -> Objects.equals(user.getEmail(), email))
                         .findFirst();
     }
-
+    
+    default List<User> findByEmailFragmentCaseIgnore(String fragment) {
+        return findAll().stream()
+                .filter(user -> user.getEmail().toLowerCase().contains(fragment.toLowerCase()))
+                .toList();
+    }
+    
+    default List<User> findByBirthDateBefore(LocalDate date) {
+        return findAll().stream()
+                .filter(user -> user.getBirthdate().isBefore(date))
+                .toList();
+    }
 }
