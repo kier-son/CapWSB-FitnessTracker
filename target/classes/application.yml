@@ -1,13 +1,64 @@
 spring:
+  # Database Configuration
   datasource:
     url: "jdbc:h2:mem:testdb"
     driver-class-name: "org.h2.Driver"
     username: "sa"
     password: "password"
+
+  # H2 Console Configuration
   h2:
     console:
       enabled: true
+      path: /h2-console
+
+  # JPA Configuration
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # Jackson Date Formatting
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+      WRITE_DATES_WITH_ZONE_ID: true
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS+00:00
+    time-zone: UTC
+
+  # Profile Configuration
   profiles:
     active: loadInitialData
+
+  # Logging Configuration
+  mvc:
+    format:
+      date: yyyy-MM-dd'T'HH:mm:ss.SSS+00:00
+
+# Server Configuration
 server:
   port: 8080
+  servlet:
+    context-path: /
+
+# Logging Configuration
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+# Additional Application-Specific Configurations
+app:
+  feature:
+    initial-data-load: true

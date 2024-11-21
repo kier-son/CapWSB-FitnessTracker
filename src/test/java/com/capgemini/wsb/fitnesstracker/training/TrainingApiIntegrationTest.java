@@ -130,20 +130,23 @@ class TrainingApiIntegrationTest extends IntegrationTestBase {
 
     @Test
     void shouldPersistTraining_whenCreatingNewTraining() throws Exception {
-
+        // Ensure a user is created and persisted before creating the training
         User user1 = existingUser(generateClient());
 
         String requestBody = """
-                {
-                    "userId": "%s",
-                    "startTime": "2024-04-01T11:00:00",
-                    "endTime": "2024-04-01T11:00:00",
-                    "activityType": "RUNNING",
-                    "distance": 10.52,
-                    "averageSpeed": 8.2
-                }
-                """.formatted(user1.getId());
-        mockMvc.perform(post("/v1/trainings").contentType(MediaType.APPLICATION_JSON).content(requestBody))
+            {
+                "userId": "%s",
+                "startTime": "2024-04-01T11:00:00",
+                "endTime": "2024-04-01T11:00:00",
+                "activityType": "RUNNING",
+                "distance": 10.52,
+                "averageSpeed": 8.2
+            }
+            """.formatted(user1.getId());
+
+        mockMvc.perform(post("/v1/trainings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
                 .andDo(log())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.user.id").value(user1.getId()))
@@ -152,7 +155,6 @@ class TrainingApiIntegrationTest extends IntegrationTestBase {
                 .andExpect(jsonPath("$.user.email").value(user1.getEmail()))
                 .andExpect(jsonPath("$.distance").value(10.52))
                 .andExpect(jsonPath("$.averageSpeed").value(8.2));
-
     }
 
     @Test
